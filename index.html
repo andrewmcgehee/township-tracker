@@ -87,23 +87,24 @@
                 loadData();
             }, []);
 
-            const loadData = async () => {
+            const loadData = () => {
                 try {
-                    const result = await window.storage.get('township-users');
-                    if (result) {
-                        setUsers(JSON.parse(result.value));
+                    const savedData = localStorage.getItem('township-users');
+                    if (savedData) {
+                        setUsers(JSON.parse(savedData));
                     }
                 } catch (error) {
                     console.log('No existing data, starting fresh');
                 }
             };
 
-            const saveData = async (newUsers) => {
+            const saveData = (newUsers) => {
                 try {
-                    await window.storage.set('township-users', JSON.stringify(newUsers));
+                    localStorage.setItem('township-users', JSON.stringify(newUsers));
                     setUsers(newUsers);
                 } catch (error) {
                     console.error('Failed to save data:', error);
+                    alert('Failed to save data. Please check your browser settings.');
                 }
             };
 
